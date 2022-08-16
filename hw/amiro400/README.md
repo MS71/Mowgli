@@ -21,8 +21,8 @@
 * PB0: P2.3
 * PB0: (BEEPER)
 * PB2: (LED)
-* PB3
-* PB4
+* PB3:
+* PB4:
 * PB5: J18.4 (not used)
 * PB6: USART1_TX,I2C1_SCL => UART to MOTOR BOARD ?
 * PB7: USART1_RX,I2C1_SDA => UART to MOTOR BOARD ?
