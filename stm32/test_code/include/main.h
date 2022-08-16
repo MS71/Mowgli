@@ -72,6 +72,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN EFP */
 
 void LED_Init();
+void BEEPER_Init();
 void TF4_Init();
 void PAC5223RESET_Init();
 void PAC5210RESET_Init();

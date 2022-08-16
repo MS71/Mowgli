@@ -116,8 +116,10 @@ int main(void)
 
     __HAL_RCC_AFIO_CLK_ENABLE();
     
+    stm32_gpiotest_out();
     
     LED_Init();
+    BEEPER_Init();
     TF4_Init();
     PAC5223RESET_Init();
     PAC5210RESET_Init();
@@ -135,6 +137,10 @@ int main(void)
         HAL_Delay(100);
     }
   */  
+
+    HAL_GPIO_WritePin(LED_GPIO_PORT, BEEPER_PIN, GPIO_PIN_SET); 
+    HAL_Delay(50);
+    HAL_GPIO_WritePin(LED_GPIO_PORT, BEEPER_PIN, GPIO_PIN_RESET); 
 
     #ifdef DRIVEMOTORS_USART_ENABLED
         DRIVEMOTORS_USART_Init();
@@ -171,7 +177,7 @@ int main(void)
 
     
     uint8_t d=0;
-    while (0)
+    while (1)
     {
        
         charge_voltage =  ADC_ChargeVoltage();            
@@ -201,6 +207,8 @@ int main(void)
         }
         d++;
     }
+
+    //HAL_UART_Transmit(&BLADEMOTOR_USART_Handler, blademotor_on, 7, HAL_MAX_DELAY);
 
     // receive messages via master serial port and send to blade/drive motor PAC
     while (1)
@@ -379,6 +387,21 @@ void LED_Init()
     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
     GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
     HAL_GPIO_Init(LED_GPIO_PORT, &GPIO_InitStruct);
+}
+
+/**
+ * @brief Init BEEPER
+ * @retval None
+ */
+void BEEPER_Init()
+{
+    BEEPER_GPIO_CLK_ENABLE();
+    GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitStruct.Pin = BEEPER_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+    HAL_GPIO_Init(BEEPER_GPIO_PORT, &GPIO_InitStruct);
 }
 
 /**
